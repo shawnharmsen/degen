@@ -11,3 +11,8 @@
 # Environment variables
 .env
 config/local.json
+
+
+# ide
+.idea
+.vscode
