@@ -20,7 +20,7 @@ lazy_static! {
 
     let app = create_app().await;
     let port = SETTINGS.server.port;
-    let address = SocketAddr::from(([127, 0, 0, 1], port));
+    let address = SocketAddr::from(([0, 0, 0, 0], port));
 
     tokio::spawn(async move {
       axum::Server::bind(&address)
