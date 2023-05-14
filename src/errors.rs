@@ -37,6 +37,12 @@ pub enum Error {
 
   #[error("{0}")]
   HashPassword(#[from] BcryptError),
+
+  #[error("{0}")]
+  ReqwestError(#[from] reqwest::Error),
+
+  #[error("{0}")]
+  General(String),
 }
 
 impl Error {
@@ -59,6 +65,8 @@ impl Error {
       Error::SerializeMongoResponse(_) => (StatusCode::INTERNAL_SERVER_ERROR, 5004),
       Error::RunSyncTask(_) => (StatusCode::INTERNAL_SERVER_ERROR, 5005),
       Error::HashPassword(_) => (StatusCode::INTERNAL_SERVER_ERROR, 5006),
+      Error::ReqwestError(_) => (StatusCode::INTERNAL_SERVER_ERROR, 5007),
+      Error::General(_) => (StatusCode::INTERNAL_SERVER_ERROR, 5008),
     }
   }
 
