@@ -158,10 +158,10 @@ async fn query_arkham(Path(address): Path<String>) -> Result<Json<ArkhamResponse
       .await
       .unwrap_or_else(|_| String::from("Could not retrieve response body"));
     tracing::error!("Received a {} error: {}", status, body);
-    return Err(Error::General(format!(
+    Err(Error::General(format!(
       "Received a {} error: {}",
       status, body
-    )));
+    )))
   }
 }
 
