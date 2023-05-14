@@ -54,6 +54,11 @@ impl Settings {
       builder = builder.set_override("server.port", port)?;
     }
 
+    // Read the MONGODB_URI environment variable.
+    if let Ok(uri) = env::var("MONGODB_URI") {
+      builder = builder.set_override("database.uri", uri)?;
+    }
+
     builder
       .build()?
       // Deserialize (and thus freeze) the entire configuration.
