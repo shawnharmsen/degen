@@ -51,7 +51,7 @@ impl Settings {
     // Some cloud services like Heroku exposes a randomly assigned port in
     // the PORT env var and there is no way to change the env var name.
     if let Ok(port) = env::var("PORT") {
-      builder = builder.set_override("server.port", port)?;
+      builder = builder.set_override("server.port", port.parse::<u16>()?)?;
     }
 
     // Read the MONGODB_URI environment variable.
