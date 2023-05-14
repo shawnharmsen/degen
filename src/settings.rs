@@ -39,6 +39,7 @@ pub struct Settings {
 
 impl Settings {
   pub fn new() -> Result<Self, ConfigError> {
+    dotenv::dotenv().ok();
     let run_mode = env::var("RUN_MODE").unwrap_or_else(|_| "development".into());
 
     let mut builder = Config::builder()
