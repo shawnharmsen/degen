@@ -5,6 +5,7 @@ use std::fs;
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Test {
+  eth_address: String,
   name: String,
   source: String,
 }
@@ -22,7 +23,12 @@ async fn main() -> mongodb::error::Result<()> {
   for map in v {
     for (key, value) in map {
       for item in value {
-        collection.insert_one(item, None).await?;
+        let document = Test {
+          eth_address: key.clone(),
+          name: item.name,
+          source: item.source,
+        };
+        collection.insert_one(document, None).await?;
       }
     }
   }

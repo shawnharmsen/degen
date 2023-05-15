@@ -7,6 +7,10 @@ edition = "2018"
 name = "load_json"
 path = "load_json.rs"
 
+[[bin]]
+name = "fix_json"
+path = "fix_json.rs"
+
 [dependencies]
 tokio = { version = "1", features = ["full"] }
 serde = { version = "1.0.105", features = ["derive"] }
