@@ -2,16 +2,18 @@ use axum::{extract::Path, routing::get, Json, Router};
 use dotenv::dotenv;
 use serde::{Deserialize, Serialize};
 use std::env;
-use tracing::error;
+use tracing::{debug, error, info};
 
 use crate::errors::Error;
 
 pub fn create_route() -> Router {
+  info!("Creating /arkham/:address route");
   Router::new().route("/arkham/:address", get(query_arkham))
 }
 
 async fn query_arkham(Path(address): Path<String>) -> Result<Json<ArkhamResponse>, Error> {
   dotenv().ok();
+  info!("Querying arkham with address: {}", &address);
   let arkham_api_key = env::var("ARKHAM_API_KEY").expect("ARKHAM_API_KEY must be set");
   let client = reqwest::Client::new();
   let res = client
@@ -19,12 +21,15 @@ async fn query_arkham(Path(address): Path<String>) -> Result<Json<ArkhamResponse
       "https://api.arkhamintelligence.com/intelligence/address/{}/all",
       address
     ))
-    .header("API-Key", arkham_api_key)
+    .header("API-Key", arkham_api_key.clone())
     .send()
     .await?;
 
+  debug!("Received response with status: {}", res.status());
+
   if res.status().is_success() {
     let arkham_data: ArkhamResponse = res.json().await?;
+    info!("Successfully retrieved Arkham data");
     Ok(Json(arkham_data))
   } else {
     let status = res.status();
