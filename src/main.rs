@@ -23,6 +23,7 @@ use settings::SETTINGS;
 
 #[tokio::main]
 async fn main() {
+  dotenv::dotenv().ok();
   let app = app::create_app().await;
 
   let port = SETTINGS.server.port;
