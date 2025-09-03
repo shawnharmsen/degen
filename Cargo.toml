@@ -32,7 +32,7 @@ async-trait = "0.1.89"
 bson = { version = "2.13.0", features = ["serde_with", "chrono-0_4"] }
 jsonwebtoken = "8.3.0"
 once_cell = "1.21.3"
-bcrypt = "0.16.0"
+bcrypt = "0.17.1"
 validator = { version = "0.20.0", features = ["derive"] }
 lazy_static = "1.5.0"
 mime = "0.3.17"
